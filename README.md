@@ -4,6 +4,7 @@
 [![Coverage Status][coveralls-shield]][coveralls]
 [![Dependency Status][dependencies-shield]][dependencies]
 [![devDependency Status][dependencies-dev-shield]][dependencies-dev]
+[![peerDependency Status][dependencies-peer-shield]][dependencies-peer]
 
 [![Develop Status][travis-shield-develop]][travis]
 [![Develop Coverage Status][coveralls-shield-develop]][coveralls]
@@ -123,5 +124,7 @@ $ gulp docs:build:dry-run
 [coveralls-shield-develop]:https://img.shields.io/coveralls/call-a3/gulp-group/develop.svg?label=develop%20coverage
 [dependencies]:            https://david-dm.org/call-a3/gulp-group
 [dependencies-dev]:        https://david-dm.org/call-a3/gulp-group#info=devDependencies
+[dependencies-peer]:       https://david-dm.org/call-a3/gulp-group#info=peerDependencies
 [dependencies-shield]:     https://img.shields.io/david/call-a3/gulp-group.svg
 [dependencies-dev-shield]: https://img.shields.io/david/dev/call-a3/gulp-group.svg
+[dependencies-peer-shield]:https://img.shields.io/david/peer/call-a3/gulp-group.svg
