@@ -1,0 +1,38 @@
+{
+  "name": "gulp-group",
+  "version": "1.0.0",
+  "description": "Grouping tasks for gulp",
+  "main": "index.js",
+  "author": {
+    "name": "Adriaan Callaerts",
+    "email": "adriaan.callaerts@gmail.com",
+    "url": "https://github.com/call-a3"
+  },
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "git://github.com/call-a3/gulp-group.git"
+  },
+  "bugs": {
+    "url": "https://github.com/call-a3/gulp-group/issues"
+  },
+  "engines": {
+    "node": "^0.12.0",
+    "npm": "^2.10.1"
+  },
+  "scripts": {
+    "test": "istanbul cover ./node_modules/mocha/bin/_mocha -- -R spec",
+    "coverage": "cat ./coverage/lcov.info | coveralls"
+  },
+  "peerDependencies": {
+    "gulp": "^3.x.x"
+  },
+  "devDependencies": {
+    "chai": "^2.3.0",
+    "coveralls": "^2.11.2",
+    "istanbul": "^0.3.14",
+    "mocha": "^2.2.5",
+    "sinon": "^1.14.1",
+    "sinon-chai": "^2.7.0"
+  }
+}

@@ -1,0 +1,14 @@
+language: node_js
+node_js:
+- '0.10'
+- '0.12'
+deploy:
+  provider: npm
+  email: adriaan.callaerts@gmail.com
+  api_key:
+    secure: Vk8Xis93tzdF8396V8hsWpLhPxuLle1y9/iMtPWZ2ryCKqnUoEmn1GW9WhoOkjxlu3mOayU+hiPvPiBH26Zsw+ILiF6pHmstS0vzhCjekmbXx8z5WIUrBJOqmCdl4W4iRmVIIGYCkdnz8EKaFlcccXzQ96+wCI9ohtV9Xq1FvwVwq7OsVbBd9PihQksKmbUYXlKQpleNCNHmcpkyLQ6O3i1Twc+q8xnArcm8hbYVDLg63PbqKHMjpZKZ27VjfnrUtjk2TssxqIuFZPkmVxi456MuHkoLsHfVSzP8fWk2MNWr2ZNRaifq9XDEND58ufw6n16O1czezdhTRiL/CjTl3DgJ7sYK5sWkyV5VndlRfIiq7MiPzRkZNnsOurLA5utlkXNvPK2wm5OOY9CqOhKXLNVcsErwmcxKO+G2Dr2FGqGWxztUoUkgnbyxhmo7OxLakCPCN+asznrfw7M8GDWuMup+K46gsQgfq8tUp9n6vKFcViXihqbaMMXL0rLOpgWl8xLSCcZpy6f2IospuHZXtEovFIx2haXjB58qt39L8C3zol7O4GlrJUWqSD6sQKhKEts/R7M+tYmfLCwAqI3UlarSWMwb9XapfaUGJfpB3iucBZBACNtnSLvjOVu+JDT5i0HrfjINfXFrSwezkZ/An2g1NqIfkWzBKvwCmbKChVY=
+  on:
+    tags: true
+    all_branches: true
+    repo: call-a3/gulp-group
+after_script: "npm run coverage"
