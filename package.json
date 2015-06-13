@@ -2,6 +2,7 @@
   "name": "gulp-group",
   "version": "1.0.0",
   "description": "Grouping tasks for gulp",
+  "keywords": ["gulpplugin", "gulp", "group", "task management"],
   "main": "index.js",
   "author": {
     "name": "Adriaan Callaerts",
