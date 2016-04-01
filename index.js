@@ -36,7 +36,7 @@ module.exports = function (gulp, config) {
   };
 
   gulp.group = function (name, define) {
-    var subTasks, group;
+    var group;
 
     group = {
       deps: [],
@@ -48,7 +48,6 @@ module.exports = function (gulp, config) {
 
     // console.log(indents.join('') + '├─┬ %s', group);
     // indents.push('│ ');
-    subTasks = [];
 
     define();
 
@@ -62,7 +61,7 @@ module.exports = function (gulp, config) {
   };
 
   gulp.task = function (name, deps, func) {
-    var resolve, ns;
+    var ns;
 
     // make ns a shallow copy of groups
     ns = groups.slice();
