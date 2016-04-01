@@ -96,14 +96,15 @@ describe('usage with custom config', function () {
     it('should resolve multi-level dependencies', function () {
       var innerTask = sinon.spy();
       var outerTask = sinon.spy();
-      gulp.group('group', function () {
-        gulp.group('group', function () {
-          gulp.task('innerTask', ['^^outerTask'], innerTask);
+      gulp.group('a', function () {
+        gulp.group('b', function () {
+          gulp.group('c', function () {
+            gulp.task('innerTask', ['^^outerTask'], innerTask);
+          });
         });
+        gulp.task('outerTask', outerTask);
       });
-      gulp.task('outerTask', outerTask);
-
-      gulp.run('group:group:innerTask');
+      gulp.run('a:b:c:innerTask');
       expect(innerTask).to.have.been.calledOnce;
       expect(outerTask).to.have.been.calledOnce;
       gulp.reset();
@@ -114,7 +115,7 @@ describe('usage with custom config', function () {
       var outerTask = sinon.spy();
       gulp.group('group', function () {
         gulp.group('group', function () {
-          gulp.task('innerTask', ['^^~outerTask'], innerTask);
+          gulp.task('innerTask', ['~^~^~outerTask'], innerTask);
         });
       });
       gulp.task('outerTask', outerTask);
