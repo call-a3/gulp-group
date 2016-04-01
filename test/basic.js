@@ -6,21 +6,25 @@ var expect = chai.expect;
 
 delete require.cache[require.resolve('..')];
 delete require.cache[require.resolve('gulp')];
-var gulp = require('..')();
+
+function requireGulp() {
+  return require('..')();
+}
 
 describe('simple usage', function () {
 
   describe('single-level group', function () {
 
     it('should execute it\'s defining function', function () {
+      var gulp = requireGulp();
       var definition = sinon.spy();
       gulp.group('group', definition);
 
       expect(definition).to.have.been.calledOnce;
-      gulp.reset();
     });
 
     it('should register a task within the group as prefixed', function () {
+      var gulp = requireGulp();
       var fn = function () {
       };
       gulp.group('group', function () {
@@ -29,10 +33,10 @@ describe('simple usage', function () {
 
       expect(gulp.tasks['group/task']).to.exist;
       expect(gulp.tasks['group/task'].fn).to.equal(fn);
-      gulp.reset();
     });
 
     it('should register a task that encapsulates the entire group', function () {
+      var gulp = requireGulp();
       var task1 = sinon.spy();
       var task2 = sinon.spy();
       gulp.group('group', function () {
@@ -44,10 +48,10 @@ describe('simple usage', function () {
       gulp.run('group');
       expect(task1).to.have.been.calledOnce;
       expect(task2).to.have.been.calledOnce;
-      gulp.reset();
     });
 
     it('should resolve dependencies within same group', function () {
+      var gulp = requireGulp();
       var task1 = sinon.spy();
       var task2 = sinon.spy();
       gulp.group('group', function () {
@@ -58,10 +62,10 @@ describe('simple usage', function () {
       gulp.run('group/task2');
       expect(task2).to.have.been.calledOnce;
       expect(task1).to.have.been.calledOnce;
-      gulp.reset();
     });
 
     it('should resolve dependencies above own group', function () {
+      var gulp = requireGulp();
       var innerTask = sinon.spy();
       var outerTask = sinon.spy();
       gulp.group('group', function () {
@@ -72,10 +76,10 @@ describe('simple usage', function () {
       gulp.run('group/innerTask');
       expect(innerTask).to.have.been.calledOnce;
       expect(outerTask).to.have.been.calledOnce;
-      gulp.reset();
     });
 
     it('should resolve normal dependencies', function () {
+      var gulp = requireGulp();
       var innerTask = sinon.spy();
       var outerTask = sinon.spy();
       gulp.group('group', function () {
@@ -86,7 +90,6 @@ describe('simple usage', function () {
       gulp.run('group/innerTask');
       expect(innerTask).to.have.been.calledOnce;
       expect(outerTask).to.have.been.calledOnce;
-      gulp.reset();
     });
 
   });
@@ -94,6 +97,7 @@ describe('simple usage', function () {
   describe('multi-level groups', function () {
 
     it('should resolve multi-level dependencies', function () {
+      var gulp = requireGulp();
       var innerTask = sinon.spy();
       var outerTask = sinon.spy();
       gulp.group('a', function () {
@@ -107,10 +111,10 @@ describe('simple usage', function () {
       gulp.run('a/b/c/innerTask');
       expect(innerTask).to.have.been.calledOnce;
       expect(outerTask).to.have.been.calledOnce;
-      gulp.reset();
     });
 
     it('should resolve multi-level dependencies with redundant parts', function () {
+      var gulp = requireGulp();
       var innerTask = sinon.spy();
       var outerTask = sinon.spy();
       gulp.group('group', function () {
@@ -123,10 +127,10 @@ describe('simple usage', function () {
       gulp.run('group/group/innerTask');
       expect(innerTask).to.have.been.calledOnce;
       expect(outerTask).to.have.been.calledOnce;
-      gulp.reset();
     });
 
     it('should resolve multi-level dependencies with sibling jumps', function () {
+      var gulp = requireGulp();
       var oneTask = sinon.spy();
       var otherTask = sinon.spy();
       gulp.group('group', function () {
@@ -141,7 +145,6 @@ describe('simple usage', function () {
       gulp.run('group/one/oneTask');
       expect(oneTask).to.have.been.calledOnce;
       expect(otherTask).to.have.been.calledOnce;
-      gulp.reset();
     });
 
   });
