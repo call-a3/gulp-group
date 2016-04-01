@@ -1,4 +1,4 @@
-module.exports = function(gulp, config) {
+module.exports = function (gulp, config) {
   var groups, task, resolveDependency;
 
   // get gulp if not provided
@@ -18,7 +18,7 @@ module.exports = function(gulp, config) {
   groups = [];
   task = gulp.task;
 
-  resolveDependency = function(dep, ns) {
+  resolveDependency = function (dep, ns) {
     if (dep.indexOf(config.current) === 0) {
       // current token is used
       ns.pop();
@@ -35,7 +35,7 @@ module.exports = function(gulp, config) {
     }
   };
 
-  gulp.group = function(name, define) {
+  gulp.group = function (name, define) {
     var subTasks, group;
 
     group = new String(name);
@@ -49,7 +49,7 @@ module.exports = function(gulp, config) {
     define();
 
     groups.pop();
-    gulp.task(group.toString(), group.deps.map(function(dep) {
+    gulp.task(group.toString(), group.deps.map(function (dep) {
       return config.current + name + config.separator + dep;
     }));
 
@@ -57,7 +57,7 @@ module.exports = function(gulp, config) {
     // indents.pop();
   };
 
-  gulp.task = function(name, deps, func) {
+  gulp.task = function (name, deps, func) {
     var resolve, ns;
 
     // make ns a shallow copy of groups
@@ -66,7 +66,7 @@ module.exports = function(gulp, config) {
 
     if (Array.isArray(deps)) {
       // console.log(indents.join('') + '├── %s [%s]', name, deps);
-      deps = deps.map(function(dep, idx, arr) {
+      deps = deps.map(function (dep, idx, arr) {
         return resolveDependency(dep.toString(), ns.slice());
       }, this);
     } else {
@@ -74,7 +74,7 @@ module.exports = function(gulp, config) {
     }
 
     if (groups.length > 0) {
-      groups[groups.length-1].deps.push(name);
+      groups[groups.length - 1].deps.push(name);
     }
 
     task.call(gulp, ns.join(config.separator), deps, func);
