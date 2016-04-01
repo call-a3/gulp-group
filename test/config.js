@@ -8,11 +8,11 @@ delete require.cache[require.resolve('..')];
 delete require.cache[require.resolve('gulp')];
 var gulp = require('..')(require('gulp'), {separator: ':', current: '~', parent: '^'});
 
-describe('usage with custom config', function() {
+describe('usage with custom config', function () {
 
-  describe('single-level group', function() {
+  describe('single-level group', function () {
 
-    it('should execute it\'s defining function', function() {
+    it('should execute it\'s defining function', function () {
       var definition = sinon.spy();
       gulp.group('group', definition);
 
@@ -20,9 +20,10 @@ describe('usage with custom config', function() {
       gulp.reset();
     });
 
-    it('should register a task within the group as prefixed', function() {
-      var fn = function() {};
-      gulp.group('group', function() {
+    it('should register a task within the group as prefixed', function () {
+      var fn = function () {
+      };
+      gulp.group('group', function () {
         gulp.task('task', fn);
       });
 
@@ -31,10 +32,10 @@ describe('usage with custom config', function() {
       gulp.reset();
     });
 
-    it('should register a task that encapsulates the entire group', function() {
+    it('should register a task that encapsulates the entire group', function () {
       var task1 = sinon.spy();
       var task2 = sinon.spy();
-      gulp.group('group', function() {
+      gulp.group('group', function () {
         gulp.task('task1', task1);
         gulp.task('task2', task2);
       });
@@ -46,10 +47,10 @@ describe('usage with custom config', function() {
       gulp.reset();
     });
 
-    it('should resolve dependencies within same group', function() {
+    it('should resolve dependencies within same group', function () {
       var task1 = sinon.spy();
       var task2 = sinon.spy();
-      gulp.group('group', function() {
+      gulp.group('group', function () {
         gulp.task('task1', task1);
         gulp.task('task2', ['~task1'], task2);
       });
@@ -60,10 +61,10 @@ describe('usage with custom config', function() {
       gulp.reset();
     });
 
-    it('should resolve dependencies above own group', function() {
+    it('should resolve dependencies above own group', function () {
       var innerTask = sinon.spy();
       var outerTask = sinon.spy();
-      gulp.group('group', function() {
+      gulp.group('group', function () {
         gulp.task('innerTask', ['^outerTask'], innerTask);
       });
       gulp.task('outerTask', outerTask);
@@ -74,10 +75,10 @@ describe('usage with custom config', function() {
       gulp.reset();
     });
 
-    it('should resolve normal dependencies', function() {
+    it('should resolve normal dependencies', function () {
       var innerTask = sinon.spy();
       var outerTask = sinon.spy();
-      gulp.group('group', function() {
+      gulp.group('group', function () {
         gulp.task('innerTask', ['outerTask'], innerTask);
       });
       gulp.task('outerTask', outerTask);
@@ -90,13 +91,13 @@ describe('usage with custom config', function() {
 
   });
 
-  describe('multi-level groups', function() {
+  describe('multi-level groups', function () {
 
-    it('should resolve multi-level dependencies', function() {
+    it('should resolve multi-level dependencies', function () {
       var innerTask = sinon.spy();
       var outerTask = sinon.spy();
-      gulp.group('group', function() {
-        gulp.group('group', function() {
+      gulp.group('group', function () {
+        gulp.group('group', function () {
           gulp.task('innerTask', ['^^outerTask'], innerTask);
         });
       });
@@ -108,11 +109,11 @@ describe('usage with custom config', function() {
       gulp.reset();
     });
 
-    it('should resolve multi-level dependencies with redundant parts', function() {
+    it('should resolve multi-level dependencies with redundant parts', function () {
       var innerTask = sinon.spy();
       var outerTask = sinon.spy();
-      gulp.group('group', function() {
-        gulp.group('group', function() {
+      gulp.group('group', function () {
+        gulp.group('group', function () {
           gulp.task('innerTask', ['^^~outerTask'], innerTask);
         });
       });
@@ -124,14 +125,14 @@ describe('usage with custom config', function() {
       gulp.reset();
     });
 
-    it('should resolve multi-level dependencies with sibling jumps', function() {
+    it('should resolve multi-level dependencies with sibling jumps', function () {
       var oneTask = sinon.spy();
       var otherTask = sinon.spy();
-      gulp.group('group', function() {
-        gulp.group('one', function() {
+      gulp.group('group', function () {
+        gulp.group('one', function () {
           gulp.task('oneTask', ['^other:otherTask'], oneTask);
         });
-        gulp.group('other', function() {
+        gulp.group('other', function () {
           gulp.task('otherTask', otherTask);
         });
       });
