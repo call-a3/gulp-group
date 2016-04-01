@@ -78,7 +78,7 @@ module.exports = function(gulp, config) {
     }
 
     task.call(gulp, ns.join(config.separator), deps, func);
-  }
+  };
 
   return gulp;
 };
