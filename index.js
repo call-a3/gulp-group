@@ -38,8 +38,12 @@ module.exports = function (gulp, config) {
   gulp.group = function (name, define) {
     var subTasks, group;
 
-    group = new String(name);
-    group.deps = [];
+    group = {
+      deps: [],
+      toString: function () {
+        return name
+      }
+    };
     groups.push(group);
 
     // console.log(indents.join('') + '├─┬ %s', group);
