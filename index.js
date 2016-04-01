@@ -69,7 +69,7 @@ module.exports = function (gulp, config) {
 
     if (Array.isArray(deps)) {
       // console.log(indents.join('') + '├── %s [%s]', name, deps);
-      deps = deps.map(function (dep, idx, arr) {
+      deps = deps.map(function (dep) {
         return resolveDependency(dep.toString(), ns.slice());
       }, this);
     } else {
