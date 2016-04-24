@@ -1,4 +1,4 @@
-module.exports = function (gulp, config) {
+module.exports = function(gulp, config) {
   var groups, task, resolveDependency;
 
   // get gulp if not provided
@@ -18,53 +18,38 @@ module.exports = function (gulp, config) {
   groups = [];
   task = gulp.task;
 
-  resolveDependency = function (dep, ns) {
-    var resolvedDep;
+  resolveDependency = function(dep, ns) {
     if (dep.indexOf(config.current) === 0) {
       // current token is used
-      dep = dep.slice(config.current.length);
-      resolvedDep = resolveDependency(dep, ns);
-      if (dep === resolvedDep) {
-        ns.push(dep);
-        return ns.join(config.separator);
-      } else {
-        return resolvedDep;
-      }
+      ns.pop();
+      ns.push(dep.slice(config.current.length));
+      return ns.join(config.separator);
     } else if (dep.indexOf(config.parent) === 0) {
       // parent token is used
       ns.pop();
-      dep = dep.slice(config.parent.length);
-      resolvedDep = resolveDependency(dep, ns);
-      if (dep === resolvedDep) {
-        ns.push(dep);
-        return ns.join(config.separator);
-      } else {
-        return resolvedDep;
-      }
+      dep = resolveDependency(dep.slice(config.parent.length), ns);
+      return resolveDependency(config.current + dep, ns);
     } else {
       // ordinary dependency
       return dep;
     }
   };
 
-  gulp.group = function (name, define) {
-    var group;
+  gulp.group = function(name, define) {
+    var subTasks, group;
 
-    group = {
-      deps: [],
-      toString: function () {
-        return name
-      }
-    };
+    group = new String(name);
+    group.deps = [];
     groups.push(group);
 
     // console.log(indents.join('') + '├─┬ %s', group);
     // indents.push('│ ');
+    subTasks = [];
 
     define();
 
     groups.pop();
-    gulp.task(group.toString(), group.deps.map(function (dep) {
+    gulp.task(group.toString(), group.deps.map(function(dep) {
       return config.current + name + config.separator + dep;
     }));
 
@@ -72,15 +57,16 @@ module.exports = function (gulp, config) {
     // indents.pop();
   };
 
-  gulp.task = function (name, deps, func) {
-    var ns;
+  gulp.task = function(name, deps, func) {
+    var resolve, ns;
 
     // make ns a shallow copy of groups
     ns = groups.slice();
+    ns.push(name);
 
     if (Array.isArray(deps)) {
       // console.log(indents.join('') + '├── %s [%s]', name, deps);
-      deps = deps.map(function (dep) {
+      deps = deps.map(function(dep, idx, arr) {
         return resolveDependency(dep.toString(), ns.slice());
       }, this);
     } else {
@@ -88,12 +74,11 @@ module.exports = function (gulp, config) {
     }
 
     if (groups.length > 0) {
-      groups[groups.length - 1].deps.push(name);
+      groups[groups.length-1].deps.push(name);
     }
 
-    ns.push(name);
     task.call(gulp, ns.join(config.separator), deps, func);
-  };
+  }
 
   return gulp;
 };
