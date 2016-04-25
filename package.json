@@ -29,10 +29,10 @@
     "gulp": "^3.x.x"
   },
   "devDependencies": {
-    "chai": "^2.3.0",
+    "chai": "^3.5.0",
     "coveralls": "^2.11.2",
     "gulp": "^3.8.11",
-    "istanbul": "^0.3.14",
+    "istanbul": "^0.4.2",
     "mocha": "^2.2.5",
     "sinon": "^1.14.1",
     "sinon-chai": "^2.7.0"
