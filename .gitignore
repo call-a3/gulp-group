@@ -27,3 +27,6 @@ build/Release
 node_modules
 
 .coveralls.yml
+
+# IntelliJ IDEA, WebStorm project directory
+.idea
